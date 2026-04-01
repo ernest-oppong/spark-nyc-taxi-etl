@@ -85,7 +85,8 @@ Implemented in `main.py`
 * Validate required columns
 * Apply data quality filters
 * Perform transformations and feature engineering
-  Due to Windows Hadoop limitations, PySpark is used for transformation logic while pandas ensures reliable output generation.
+
+Due to Windows Hadoop limitations, PySpark is used for transformation logic while pandas ensures reliable output generation.
 ---
 
 ### 🔹 Stage 2: Curated Analytics Layer
@@ -191,6 +192,7 @@ The pipeline successfully produces analytics-ready datasets:
 - Daily trip metrics (volume, revenue, distance)
 - Payment method distribution analysis
 - Zone-to-zone trip performance insights
+
 These outputs can be directly used for reporting, dashboards, or business analysis.
 ---
 
