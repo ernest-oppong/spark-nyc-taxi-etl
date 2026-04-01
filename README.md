@@ -91,7 +91,7 @@ Implemented in `main.py`
 
 ### 🔹 Stage 2: Curated Analytics Layer
 
-Implemented in `build_curated_pandas.py`
+Implemented in `curated_pandas.py`
 
 * Generate aggregated datasets
 * Produce analytics-ready outputs
@@ -141,8 +141,7 @@ The pipeline enforces:
 ### 1️⃣ Clone repository
 
 ```
-git clone https://github.com/YOUR_USERNAME/spark-nyc-taxi-etl.git
-cd spark-nyc-taxi-etl
+git clone https://github.com/ernest-oppong/spark-nyc-taxi-etl.git
 ```
 
 ---
@@ -186,7 +185,15 @@ python src/build_curated_pandas.py
 ```
 dir data\curated
 ```
+## 📊 Results
 
+The pipeline successfully produces analytics-ready datasets:
+
+- Daily trip metrics (volume, revenue, distance)
+- Payment method distribution analysis
+- Zone-to-zone trip performance insights
+
+These outputs can be directly used for reporting, dashboards, or business analysis.
 ---
 
 ## 📸 Screenshots
