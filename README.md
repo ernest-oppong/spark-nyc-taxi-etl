@@ -86,7 +86,8 @@ Implemented in `main.py`
 * Validate required columns
 * Apply data quality filters
 * Perform transformations and feature engineering
-
+  
+Due to Windows Hadoop limitations, PySpark is used for transformation logic while pandas ensures reliable output generation.
 ---
 
 ### 🔹 Stage 2: Curated Analytics Layer
