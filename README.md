@@ -67,7 +67,7 @@ spark-nyc-taxi-etl/
 │   ├── transform.py
 │   ├── load.py
 │   ├── main.py
-│   └── build_curated_pandas.py
+│   └── curated_layer.py
 ├── tests/
 ├── docker-compose.yml
 ├── requirements.txt
@@ -91,7 +91,7 @@ Implemented in `main.py`
 
 ### 🔹 Stage 2: Curated Analytics Layer
 
-Implemented in `curated_pandas.py`
+Implemented in `curated_layer.py`
 
 * Generate aggregated datasets
 * Produce analytics-ready outputs
@@ -175,7 +175,7 @@ python src/main.py
 ### 5️⃣ Run curated pipeline
 
 ```
-python src/build_curated_pandas.py
+python src/curated_layer.py
 ```
 
 ---
