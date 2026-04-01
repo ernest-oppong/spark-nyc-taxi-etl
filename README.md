@@ -2,10 +2,11 @@
 
 ## 📌 Overview
 
-This project implements a **modular end-to-end ETL pipeline** using real NYC Taxi trip data.
-It demonstrates how raw data is ingested, validated, transformed, and converted into **analytics-ready datasets**.
+This project demonstrates the design and implementation of a **production-style ETL pipeline** using real-world NYC Taxi data.
 
-The pipeline is designed to simulate **real-world data engineering workflows**, combining PySpark transformations with a curated analytics layer.
+The pipeline ingests raw trip records, applies data validation and transformation using PySpark, and generates analytics-ready datasets for business reporting.
+
+It reflects how data engineers structure pipelines in real environments, including modular design, data quality checks, and layered outputs.
 
 ---
 
@@ -16,39 +17,54 @@ Organizations need pipelines that:
 
 * clean and validate large datasets
 * remove inconsistent or unrealistic records
-* produce reliable business metrics
+* generate reliable business metrics
 
 This project simulates how data engineers prepare **analytics-ready datasets** for reporting and decision-making.
 
 ---
 
-## 📥 Dataset
-The dataset used in this project is too large to be included in the repository.
+## 📊 Dataset
 
-You can download it from the official NYC Taxi dataset source:
+NYC Taxi & Limousine Commission (TLC) — Yellow Taxi Trip Records
 
-https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
+Key fields used:
 
-After downloading, place the file in:
+* pickup & dropoff timestamps
+* passenger count
+* trip distance
+* pickup & dropoff location IDs
+* payment type
+* fare, tip, and total amounts
 
+### 📥 Dataset Access
+
+The dataset is too large to be included in this repository.
+
+You can download it from the official source:
+
+👉 https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
+
+After downloading, place the file here:
+
+```text
 data/raw/yellow_tripdata_2026-01.parquet
+```
 
 ---
 
 ## 🧰 Tech Stack
 
-* Python
-* PySpark
-* Pandas
-* PostgreSQL (Docker)
-* SQLAlchemy
-* pg8000
+* **Python** — core programming language
+* **PySpark** — distributed data processing and transformation
+* **Pandas** — curated analytics layer and aggregations
+* **PostgreSQL (Docker)** — optional data storage layer
+* **SQLAlchemy & pg8000** — database connectivity
 
 ---
 
 ## 🏗️ Project Structure
 
-```
+```text
 spark-nyc-taxi-etl/
 ├── config/
 │   └── config.yaml
@@ -79,22 +95,23 @@ spark-nyc-taxi-etl/
 
 ### 🔹 Stage 1: Spark Transformation Pipeline
 
-Implemented in `main.py`
+Implemented in `src/main.py`:
 
-* Read raw parquet dataset
-* Validate required columns
-* Apply data quality filters
-* Perform transformations and feature engineering
+* read raw parquet dataset
+* validate required columns
+* apply data quality filters
+* perform transformations and feature engineering
 
 Due to Windows Hadoop limitations, PySpark is used for transformation logic while pandas ensures reliable output generation.
+
 ---
 
 ### 🔹 Stage 2: Curated Analytics Layer
 
-Implemented in `curated_layer.py`
+Implemented in `src/curated_layer.py`:
 
-* Generate aggregated datasets
-* Produce analytics-ready outputs
+* generate aggregated datasets
+* produce analytics-ready outputs
 
 ---
 
@@ -102,12 +119,24 @@ Implemented in `curated_layer.py`
 
 The pipeline enforces:
 
-* valid timestamps
+* valid pickup & dropoff timestamps
 * trip distance > 0
 * non-negative fare and total amounts
 * passenger count between 1 and 6
 * trip duration between 1 and 300 minutes
 * realistic speed ranges
+
+---
+
+## 📊 Results
+
+The pipeline generates analytics-ready datasets including:
+
+* daily trip metrics (trip volume, revenue, distance)
+* payment method distribution analysis
+* zone-to-zone trip performance insights
+
+These outputs can be directly used for reporting, dashboards, or business analysis.
 
 ---
 
@@ -125,30 +154,22 @@ The pipeline enforces:
 
 ---
 
-## 📊 Example Metrics
-
-* total trips per day
-* average trip distance
-* average trip duration
-* total revenue
-* payment method distribution
-* top pickup/dropoff zones
-
----
-
 ## 🚀 How to Run the Project
+
+Follow these steps to reproduce the pipeline locally.
 
 ### 1️⃣ Clone repository
 
-```
+```bash
 git clone https://github.com/ernest-oppong/spark-nyc-taxi-etl.git
+cd spark-nyc-taxi-etl
 ```
 
 ---
 
 ### 2️⃣ Install dependencies
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
@@ -156,9 +177,7 @@ pip install -r requirements.txt
 
 ### 3️⃣ Add dataset
 
-Place file in:
-
-```
+```text
 data/raw/yellow_tripdata_2026-01.parquet
 ```
 
@@ -166,7 +185,7 @@ data/raw/yellow_tripdata_2026-01.parquet
 
 ### 4️⃣ Run Spark pipeline
 
-```
+```bash
 python src/main.py
 ```
 
@@ -174,7 +193,7 @@ python src/main.py
 
 ### 5️⃣ Run curated pipeline
 
-```
+```bash
 python src/curated_layer.py
 ```
 
@@ -182,18 +201,10 @@ python src/curated_layer.py
 
 ### 6️⃣ Verify outputs
 
-```
+```bash
 dir data\curated
 ```
-## 📊 Results
 
-The pipeline successfully produces analytics-ready datasets:
-
-- Daily trip metrics (volume, revenue, distance)
-- Payment method distribution analysis
-- Zone-to-zone trip performance insights
-
-These outputs can be directly used for reporting, dashboards, or business analysis.
 ---
 
 ## 📸 Screenshots
@@ -218,45 +229,55 @@ These outputs can be directly used for reporting, dashboards, or business analys
 
 ## 🗄️ Database Layer (Optional)
 
-PostgreSQL integration is included via Docker.
+PostgreSQL integration is included via Docker:
 
-```
+```bash
 docker compose up -d
 ```
 
-The database load is optional in local environments due to possible authentication or system-specific issues.
+The database load step is optional and may depend on local environment configuration.
 
 ---
 
 ## ⚠️ Local Environment Notes
 
 * Spark write operations may fail on Windows due to Hadoop (`winutils`) limitations
-* Pandas is used to ensure reliable output generation
-* PostgreSQL loading is optional depending on environment configuration
+* Pandas ensures reliable local output generation
+* PostgreSQL loading may require additional configuration
 
 ---
 
 ## 🔮 Future Improvements
 
-* run full pipeline in Linux/WSL
-* add Airflow orchestration
-* implement streaming with Kafka
-* add dashboard (Power BI / Tableau)
+* run the full pipeline in Linux or WSL
+* add Apache Airflow orchestration
+* implement streaming pipeline using Kafka
+* build dashboards (Power BI / Tableau)
+
+---
+
+## 💡 Key Learnings
+
+* designing modular ETL pipelines using real datasets
+* applying data quality validation in transformation workflows
+* combining distributed processing (PySpark) with local analytics layers
+* structuring projects for reproducibility and scalability
+
+---
+
+## 📌 Project Type
+
+Portfolio project focused on Data Engineering fundamentals and real-world pipeline design.
 
 ---
 
 ## 👤 Author
 
-Built as a portfolio project to demonstrate:
-
-* ETL pipeline design
-* PySpark transformation logic
-* data validation and cleaning
-* modular project structure
-* real-world dataset handling
+Built to demonstrate practical data engineering skills using real-world datasets and production-style pipeline design.
 
 ---
 
 ## ⭐ Key Takeaway
 
-This project demonstrates how raw data is transformed into **analytics-ready datasets**, reflecting real-world data engineering practices.
+This project demonstrates how raw data is transformed into **analytics-ready datasets**, reflecting real-world data engineering practices used in production environments.
+
